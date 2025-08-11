@@ -1,5 +1,5 @@
 {
-    "name": "bezhansalleh/filament-exceptions",
+    "name": "noin/filament-exceptions",
     "description": "A Simple & Beautiful Pluggable Exception Viewer for FilamentPHP's Admin Panel",
     "keywords": [
         "bezhanSalleh",
@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^8.1|^8.2",
-        "filament/filament": "^3.2",
+        "filament/filament": "^3.2 || ^4.0",
         "spatie/laravel-package-tools": "^1.15"
     },
     "require-dev": {
