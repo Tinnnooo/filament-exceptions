@@ -1,7 +1,7 @@
 @props(['queries'])
 
 @forelse (collect(json_decode($queries,true))->all() ?? [] as $query)
-    <div class="p-4 mb-4 bg-gray-100 rounded-lg dark:text-100 dark:bg-white/[0.03]">
+    <div class="p-4 mb-4 bg-gray-100 rounded-lg dark:text-100 dark:bg-white/3">
 
         <div
             class="flex items-center justify-start pb-2 space-x-2 text-xs font-medium leading-6 text-gray-900 dark:text-gray-50">
