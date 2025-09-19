@@ -16,12 +16,12 @@ use Filament\Support\Concerns\EvaluatesClosures;
 
 class FilamentExceptionsPlugin implements Plugin
 {
+    use EvaluatesClosures;
     use HasLabels;
     use HasModelPruneInterval;
     use HasNavigation;
     use HasTabs;
     use HasTenantScope;
-    use EvaluatesClosures;
 
     public static function make(): static
     {

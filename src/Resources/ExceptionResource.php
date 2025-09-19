@@ -2,23 +2,20 @@
 
 namespace BezhanSalleh\FilamentExceptions\Resources;
 
+use BezhanSalleh\FilamentExceptions\FilamentExceptions;
+use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
+use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages\ListExceptions;
+use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages\ViewException;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Panel;
-use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\View;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages\ListExceptions;
-use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages\ViewException;
-use BezhanSalleh\FilamentExceptions\FilamentExceptions;
-use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
-use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages;
-use Filament\Forms;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 

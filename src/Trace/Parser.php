@@ -2,8 +2,8 @@
 
 namespace BezhanSalleh\FilamentExceptions\Trace;
 
-use ReturnTypeWillChange;
 use Iterator;
+use ReturnTypeWillChange;
 
 class Parser implements Iterator
 {

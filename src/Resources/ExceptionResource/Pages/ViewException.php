@@ -2,10 +2,9 @@
 
 namespace BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource;
 use BezhanSalleh\FilamentExceptions\Trace\Parser;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewException extends ViewRecord

@@ -2,8 +2,8 @@
 
 namespace BezhanSalleh\FilamentExceptions\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
 
