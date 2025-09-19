@@ -267,7 +267,7 @@ class ExceptionResource extends Resource
     {
         if (blank(static::$cachedFrames) && $record) {
             $trace = "#0 {$record->file}({$record->line})\n";
-            $frames = (new Parser($trace . $record->trace))->parse();
+            $frames = (new Parser($trace.$record->trace))->parse();
             array_pop($frames);
             static::$cachedFrames = $frames;
         }
@@ -280,9 +280,9 @@ class ExceptionResource extends Resource
         return collect(static::getTraceFrames($record))
             ->map(function ($frame, $index) {
                 return Tab::make(fn () => str()->uuid()->append($index)->toString())
-                    ->label(str($frame->file())->replace(base_path() . '/', '')->append(' in ' . $frame->method())->append(' at line: ' . $frame->line())->limit(50)->toString())
+                    ->label(str($frame->file())->replace(base_path().'/', '')->append(' in '.$frame->method())->append(' at line: '.$frame->line())->limit(50)->toString())
                     ->schema([
-                        CustomCodeEntry::make('frame_' . $index)
+                        CustomCodeEntry::make('frame_'.$index)
                             ->hiddenLabel()
                             ->state($frame->getCodeBlock()->codeString())
                             ->grammar(Grammar::Php)

@@ -44,7 +44,7 @@ class TestCase extends Orchestra
 
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     public function getEnvironmentSetUp($app)
@@ -52,7 +52,7 @@ class TestCase extends Orchestra
         $app['config']->set('database.default', 'testing');
         $app['config']->set('view.paths', [
             ...$app['config']->get('view.paths'),
-            __DIR__ . '/../resources/views',
+            __DIR__.'/../resources/views',
         ]);
 
         /*

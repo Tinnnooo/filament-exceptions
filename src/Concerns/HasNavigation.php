@@ -11,109 +11,109 @@ use Filament\Pages\Enums\SubNavigationPosition;
 trait HasNavigation
 {
     /** @var class-string<Cluster> | Closure | null */
-    protected string | Closure | null $cluster = null;
+    protected string|Closure|null $cluster = null;
 
-    protected bool | Closure $shouldEnableNavigationBadge = false;
+    protected bool|Closure $shouldEnableNavigationBadge = false;
 
-    protected string | array | Closure | null $navigationBadgeColor = null;
+    protected string|array|Closure|null $navigationBadgeColor = null;
 
-    protected string | Closure | null $navigationGroup = null;
+    protected string|Closure|null $navigationGroup = null;
 
-    protected string | Closure | null $navigationParentItem = null;
+    protected string|Closure|null $navigationParentItem = null;
 
-    protected string | Closure | null $navigationIcon = null;
+    protected string|Closure|null $navigationIcon = null;
 
-    protected string | Closure | null $activeNavigationIcon = null;
+    protected string|Closure|null $activeNavigationIcon = null;
 
-    protected string | Closure | null $navigationLabel = null;
+    protected string|Closure|null $navigationLabel = null;
 
-    protected int | Closure | null $navigationSort = null;
+    protected int|Closure|null $navigationSort = null;
 
-    protected string | Closure | null $slug = null;
+    protected string|Closure|null $slug = null;
 
-    protected bool | Closure $shouldRegisterNavigation = true;
+    protected bool|Closure $shouldRegisterNavigation = true;
 
-    protected SubNavigationPosition | Closure $subNavigationPosition = SubNavigationPosition::Start;
+    protected SubNavigationPosition|Closure $subNavigationPosition = SubNavigationPosition::Start;
 
     // Setters
-    public function cluster(string | Closure | null $cluster): static
+    public function cluster(string|Closure|null $cluster): static
     {
         $this->cluster = $cluster;
 
         return $this;
     }
 
-    public function navigationBadge(bool | Closure $condition = true): static
+    public function navigationBadge(bool|Closure $condition = true): static
     {
         $this->shouldEnableNavigationBadge = $condition;
 
         return $this;
     }
 
-    public function navigationBadgeColor(string | array | Closure $color): static
+    public function navigationBadgeColor(string|array|Closure $color): static
     {
         $this->navigationBadgeColor = $color;
 
         return $this;
     }
 
-    public function navigationGroup(string | Closure | null $group): static
+    public function navigationGroup(string|Closure|null $group): static
     {
         $this->navigationGroup = $group;
 
         return $this;
     }
 
-    public function navigationParentItem(string | Closure | null $item): static
+    public function navigationParentItem(string|Closure|null $item): static
     {
         $this->navigationParentItem = $item;
 
         return $this;
     }
 
-    public function navigationIcon(string | Closure | null $icon): static
+    public function navigationIcon(string|Closure|null $icon): static
     {
         $this->navigationIcon = $icon;
 
         return $this;
     }
 
-    public function activeNavigationIcon(string | Closure | null $icon): static
+    public function activeNavigationIcon(string|Closure|null $icon): static
     {
         $this->activeNavigationIcon = $icon;
 
         return $this;
     }
 
-    public function navigationLabel(string | Closure | null $label): static
+    public function navigationLabel(string|Closure|null $label): static
     {
         $this->navigationLabel = $label;
 
         return $this;
     }
 
-    public function navigationSort(int | Closure | null $sort): static
+    public function navigationSort(int|Closure|null $sort): static
     {
         $this->navigationSort = $sort;
 
         return $this;
     }
 
-    public function slug(string | Closure | null $slug): static
+    public function slug(string|Closure|null $slug): static
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    public function registerNavigation(bool | Closure $shouldRegisterNavigation): static
+    public function registerNavigation(bool|Closure $shouldRegisterNavigation): static
     {
         $this->shouldRegisterNavigation = $shouldRegisterNavigation;
 
         return $this;
     }
 
-    public function subNavigationPosition(SubNavigationPosition | Closure $subNavigationPosition): static
+    public function subNavigationPosition(SubNavigationPosition|Closure $subNavigationPosition): static
     {
         $this->subNavigationPosition = $subNavigationPosition;
 
@@ -131,7 +131,7 @@ trait HasNavigation
         return $this->evaluate($this->shouldEnableNavigationBadge);
     }
 
-    public function getNavigationBadgeColor(): string | array | null
+    public function getNavigationBadgeColor(): string|array|null
     {
         return $this->evaluate($this->navigationBadgeColor);
     }

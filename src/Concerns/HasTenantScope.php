@@ -8,27 +8,27 @@ use Closure;
 
 trait HasTenantScope
 {
-    protected bool | Closure $isScopedToTenant = true;
+    protected bool|Closure $isScopedToTenant = true;
 
-    protected string | Closure | null $tenantOwnershipRelationshipName = null;
+    protected string|Closure|null $tenantOwnershipRelationshipName = null;
 
-    protected string | Closure | null $tenantRelationshipName = null;
+    protected string|Closure|null $tenantRelationshipName = null;
 
-    public function scopeToTenant(bool | Closure $condition = true): static
+    public function scopeToTenant(bool|Closure $condition = true): static
     {
         $this->isScopedToTenant = $condition;
 
         return $this;
     }
 
-    public function tenantOwnershipRelationshipName(string | Closure | null $ownershipRelationshipName): static
+    public function tenantOwnershipRelationshipName(string|Closure|null $ownershipRelationshipName): static
     {
         $this->tenantOwnershipRelationshipName = $ownershipRelationshipName;
 
         return $this;
     }
 
-    public function tenantRelationshipName(string | Closure | null $relationshipName): static
+    public function tenantRelationshipName(string|Closure|null $relationshipName): static
     {
         $this->tenantRelationshipName = $relationshipName;
 

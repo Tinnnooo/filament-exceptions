@@ -24,7 +24,7 @@ class ViewException extends ViewRecord
     {
         if (blank($this->cachedFrames)) {
             $trace = "#0 {$this->record->file}({$this->record->line})\n";
-            $frames = (new Parser($trace . $this->record->trace))->parse();
+            $frames = (new Parser($trace.$this->record->trace))->parse();
             array_pop($frames);
 
             $this->cachedFrames = $frames;
@@ -61,12 +61,12 @@ class ViewException extends ViewRecord
     {
         return [
             'fi-resource-view-record-page',
-            'fi-resource-' . str_replace('/', '-', $this->getResource()::getSlug(Filament::getCurrentOrDefaultPanel())),
+            'fi-resource-'.str_replace('/', '-', $this->getResource()::getSlug(Filament::getCurrentOrDefaultPanel())),
             "fi-resource-record-{$this->getRecord()->getKey()}",
         ];
     }
 
-    public function getMaxContentWidth(): Width | string | null
+    public function getMaxContentWidth(): Width|string|null
     {
         return Width::Full;
     }

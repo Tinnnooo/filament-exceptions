@@ -35,7 +35,7 @@ class CodeBlock
 
     public function codeString(): string
     {
-        return once(fn (): string => $this->prefix . $this->line . $this->suffix);
+        return once(fn (): string => $this->prefix.$this->line.$this->suffix);
     }
 
     public function output($focusLine, Theme $theme = Theme::GithubLight): string

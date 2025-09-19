@@ -18,11 +18,11 @@ class CustomCodeEntry extends Entry implements HasEmbeddedView
 {
     use CanBeCopied;
 
-    protected string | Grammar | Closure | null $grammar = null;
+    protected string|Grammar|Closure|null $grammar = null;
 
-    protected string | Theme | Closure | null $lightTheme = null;
+    protected string|Theme|Closure|null $lightTheme = null;
 
-    protected string | Theme | Closure | null $darkTheme = null;
+    protected string|Theme|Closure|null $darkTheme = null;
 
     protected int $focusLine = 1;
 
@@ -52,38 +52,38 @@ class CustomCodeEntry extends Entry implements HasEmbeddedView
         return $this->evaluate($this->startLine);
     }
 
-    public function grammar(string | Grammar | Closure | null $grammar): static
+    public function grammar(string|Grammar|Closure|null $grammar): static
     {
         $this->grammar = $grammar;
 
         return $this;
     }
 
-    public function getGrammar(): string | Grammar | null
+    public function getGrammar(): string|Grammar|null
     {
         return $this->evaluate($this->grammar);
     }
 
-    public function lightTheme(string | Theme | Closure | null $theme): static
+    public function lightTheme(string|Theme|Closure|null $theme): static
     {
         $this->lightTheme = $theme;
 
         return $this;
     }
 
-    public function getLightTheme(): string | Theme | null
+    public function getLightTheme(): string|Theme|null
     {
         return $this->evaluate($this->lightTheme);
     }
 
-    public function darkTheme(string | Theme | Closure | null $theme): static
+    public function darkTheme(string|Theme|Closure|null $theme): static
     {
         $this->darkTheme = $theme;
 
         return $this;
     }
 
-    public function getDarkTheme(): string | Theme | null
+    public function getDarkTheme(): string|Theme|null
     {
         return $this->evaluate($this->darkTheme);
     }
@@ -102,7 +102,7 @@ class CustomCodeEntry extends Entry implements HasEmbeddedView
                 ->merge([
                     'x-tooltip' => filled($tooltip = $this->getEmptyTooltip())
                         ? '{
-                            content: ' . Js::from($tooltip) . ',
+                            content: '.Js::from($tooltip).',
                             theme: $store.theme,
                         }'
                         : null,
@@ -162,7 +162,7 @@ class CustomCodeEntry extends Entry implements HasEmbeddedView
                     : null,
                 'x-tooltip' => filled($tooltip = $this->getTooltip($state))
                     ? '{
-                        content: ' . Js::from($tooltip) . ',
+                        content: '.Js::from($tooltip).',
                         theme: $store.theme,
                     }'
                     : null,

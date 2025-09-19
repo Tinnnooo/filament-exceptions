@@ -14,7 +14,7 @@ class Frame
 {
     protected ?array $attributes = [];
 
-    protected array | CodeBlock | null $code = [];
+    protected array|CodeBlock|null $code = [];
 
     public function __construct(protected ?string $frame = '')
     {
@@ -115,7 +115,7 @@ class Frame
         }
     }
 
-    public function getCodeBlock(): array | CodeBlock
+    public function getCodeBlock(): array|CodeBlock
     {
         return empty($this->code) ? new CodeBlock : $this->code;
     }
