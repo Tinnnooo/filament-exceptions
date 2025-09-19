@@ -1,15 +1,74 @@
-<div x-data="{ active: 0 }" class="space-y-2 ">
+<div x-data="{
+    active: 0,
+    darkMode: false,
+    fromCache: {},
+    preloadQueue: [],
+    frames: @js($this->frames),
+
+    init() {
+        this.updateDarkMode();
+        this.watchThemeChanges();
+        this.startBackgroundPreload();
+    },
+
+    updateDarkMode() {
+        this.darkMode = document.documentElement.classList.contains('dark') || window.theme === 'dark';
+        this.invalidateCache();
+        this.startBackgroudPreload();
+    },
+
+    watchThemeChanges() {
+        const observer = new MutationObserver(() => this.updateDarkMode());
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    },
+
+    startBackgroundPreload() {
+        setTimeout(() => {
+            for (let i = 1; i < this.frames.length; i++) {
+                this.preloadQueue.push(i);
+            }
+            this.processPreloadQueue();
+        }, 500);
+    },
+
+    async processPreloadQueue() {
+        if (this.preloadQueue.length === 0) return;
+
+        const frameIndex = this.preloadQueue.shift();
+        const cacheKey = frameIndex + '_' + (this.darkMode ? 'dark' : 'light');
+
+        if (!this.frameCache[cacheKey]) {
+            try {
+                this.frameCache[cacheKey] = await $wire.call('renderFrame', frameIndex, this.darkMode);
+            } catch (error) {
+                this.frameCache[cacheKey] = '<div class=\'text-red-500 p-4\'>Error loading frame</div>'
+            }
+        }
+
+        setTimeout(() => this.processPreloadQueue(), 100);
+    },
+
+    invalidateCheck() {
+        this.frameCache = {};
+        this.preloadQueue = [];
+    },
+
+    getFrameContent(frameIndex) {
+        const cacheKey = frameIndex + '_' + (this.darkMode ? 'dark' : 'light');
+        return this.frameCache[cacheKey] || '';
+    }
+}" x-init="init()" class="space-y-2" dir="ltr">
     @foreach ($this->frames as $index => $frame)
         <div x-data="{
             id: {{ $index }},
             get section() {
-                return this.active === this.id
+                return active === this.id
             },
             set section(value) {
-                this.active = value ? this.id : null
+                active = value ? this.id : null
             }
         }"
-            class="bg-gray-100 rounded-lg dark:text-gray-200 dark:bg-gray-800 dark:border dark:border-gray-600">
+            class="bg-gray-100 fi-sc-tabs fi-contained dark:text-gray-200 dark:bg-gray-800 dark:border dark:border-gray-600">
             <div class="flex flex-wrap break-all">
                 <div x-on:click="section = !section"
                     class="flex items-center justify-start w-full py-2 pr-2 text-sm font-semibold rtl:pl-2">
@@ -27,11 +86,14 @@
                         in {{ $frame->method() }}
                         at line
                         <span
-                            class="inline-flex items-center justify-center ml-auto rtl:ml-0 rtl:mr-auto min-h-4 px-2 py-0.5 text-xs font-medium tracking-tight rounded-xl whitespace-normal text-primary-600 bg-primary-500/10 dark:text-primary-500">{{ $frame->line() }}</span>
+                            class="inline-flex items-center justify-center ml-auto rtl:ml-0 rtl:mr-auto min-h-4 px-2 py-0.5 text-xs font-medium tracking-tight rounded-xl whitespace-normal text-primary-600 bg-primary-500/10 dark:text-primary-500">
+                            {{ $frame->line() }}
+                        </span>
                     </span>
-
                 </div>
             </div>
+
+
             {{-- class="font-mono break-all sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" --}}
             <div x-show="section" x-collapse>
                 <div class="px-4 pb-4 rounded-lg dark:bg-gray-800 dark:text-200">
@@ -55,6 +117,21 @@
                         </table>
                     @endif
                 </div>
+            </div>
+
+            <div x-show="section" x-collapse class="[&>pre]:!mx-1 [&>pre]:!my-0 mx-2 pb-3 fi-container">
+                @if ($index === 0)
+                    <template x-if="!darkMode">
+                        {!! $frame->getCodeBlock()->output($frame->line(), \Phiki\Theme\Theme::GithubLight) !!}
+                    </template>
+                    <template x-if="darkMode">
+                        {!! $frame->getCodeBlock()->output($frame->line(), \Phiki\Theme\Theme::GithubDark) !!}
+                    </template>
+                @else
+                    <template x-if="section && getFrameContent({{ $index }})">
+                        <div x-html="getFrameContent({{ $index }})" x-transition:opacity.duration.400ms></div>
+                    </template>
+                @endif
             </div>
         </div>
     @endforeach

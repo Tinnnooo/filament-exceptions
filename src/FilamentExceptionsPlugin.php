@@ -36,14 +36,13 @@ class FilamentExceptionsPlugin implements Plugin
     public function register(Panel $panel): void
     {
         if (is_null(FilamentExceptions::getModel())) {
-            FilamentExceptions::model('\\BezhanSalleh\\FilamentExceptions\\Models\\Exception');
+            FilamentExceptions::model(\BezhanSalleh\FilamentExceptions\Models\Exception::class);
         }
 
         $panel
             ->resources([
                 ExceptionResource::class,
             ]);
-
     }
 
     public function boot(Panel $panel): void {}
