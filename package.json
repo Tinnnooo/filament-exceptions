@@ -1,22 +1,22 @@
 {
     "private": true,
     "type": "module",
+    "engines": {
+        "node": ">=22.19.0"
+    },
     "scripts": {
-        "dev": "npx @tailwindcss/cli -i resources/css/filament-exceptions.css -o resources/dist/filament-exceptions.css --watch",
-        "build": "npx @tailwindcss/cli -i resources/css/filament-exceptions.css -o resources/dist/filament-exceptions.css --minify && npm run purge",
-        "purge": "filament-purge -i resources/dist/filament-exceptions.css -o resources/dist/filament-exceptions.css -v 3.x",
-        "prettier": "npx prettier --write .",
-        "deploy": "npm run build && npm run prettier"
+        "dev": "vite",
+        "build": "vite build",
+        "watch": "vite build --watch"
+    },
+    "dependencies": {
+        "shiki": "^3.13.0",
+        "tailwindcss": "^4.1.12",
+        "tippy.js": "^6.3.7",
+        "tw-animate-css": "^1.3.7"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.5.4",
-        "@tailwindcss/postcss": "^4.1.13",
-        "@tailwindcss/typography": "^0.5.9",
-        "esbuild": "^0.25.10",
-        "postcss": "^8.4.26",
-        "prettier": "^3.0.0",
-        "prettier-plugin-blade": "^1.6.10",
-        "prettier-plugin-tailwindcss": "^0.6.14",
-        "tailwindcss": "^4.1.13"
+        "@tailwindcss/vite": "^4.1.12",
+        "vite": "^7.1.11"
     }
 }
