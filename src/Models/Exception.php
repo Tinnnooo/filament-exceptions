@@ -35,6 +35,13 @@ class Exception extends model
         return static::whereDate('created_at', '<=', FilamentExceptionsPlugin::get()->getModelPruneInterval());
     }
 
+    public function getQueryAttribute($value): array
+    {
+        return collect(json_decode((string) $value, true))
+            ->filter(fn ($q): bool => filled($q))
+            ->all() ?? [];
+    }
+
     protected function body(): Attribute
     {
         return Attribute::make(
@@ -56,18 +63,11 @@ class Exception extends model
         );
     }
 
-    public function getQueryAttribute($value): array
-    {
-        return collect(json_decode((string) $value, true))
-            ->filter(fn ($q): bool => filled($q))
-            ->all() ?? [];
-    }
-
     protected function transformAttribute($value): array
     {
         return collect(json_decode((string) $value, true))
             ->sortKeys()
-            ->transform(fn ($val) => is_array($val) ? implode(' ', collect($val)->flatten()->toArray()) : $val)
+            ->transform(fn ($val): mixed => is_array($val) ? implode(' ', collect($val)->flatten()->toArray()) : $val)
             ->filter()
             ->all();
         // return collect(json_decode($value, true))

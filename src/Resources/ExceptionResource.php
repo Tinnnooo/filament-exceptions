@@ -267,7 +267,7 @@ class ExceptionResource extends Resource
     {
         if (blank(static::$cachedFrames) && $record) {
             $trace = "#0 {$record->file}({$record->line})\n";
-            $frames = (new Parser($trace.$record->trace))->parse();
+            $frames = (new Parser($trace . $record->trace))->parse();
             array_pop($frames);
             static::$cachedFrames = $frames;
         }
@@ -278,20 +278,18 @@ class ExceptionResource extends Resource
     public static function getFrameTabs(Model $record): array
     {
         return collect(static::getTraceFrames($record))
-            ->map(function ($frame, $index) {
-                return Tab::make(fn () => str()->uuid()->append($index)->toString())
-                    ->label(str($frame->file())->replace(base_path().'/', '')->append(' in '.$frame->method())->append(' at line: '.$frame->line())->limit(50)->toString())
-                    ->schema([
-                        CustomCodeEntry::make('frame_'.$index)
-                            ->hiddenLabel()
-                            ->state($frame->getCodeBlock()->codeString())
-                            ->grammar(Grammar::Php)
-                            ->lightTheme(Theme::GithubLight)
-                            ->darkTheme(Theme::GithubDarkDefault)
-                            ->focusLine(intval($frame->line()))
-                            ->startLine(1),
-                    ]);
-            })
+            ->map(fn ($frame, string $index): \Filament\Schemas\Components\Tabs\Tab => Tab::make(fn () => str()->uuid()->append($index)->toString())
+                ->label(str($frame->file())->replace(base_path() . '/', '')->append(' in ' . $frame->method())->append(' at line: ' . $frame->line())->limit(50)->toString())
+                ->schema([
+                    CustomCodeEntry::make('frame_' . $index)
+                        ->hiddenLabel()
+                        ->state($frame->getCodeBlock()->codeString())
+                        ->grammar(Grammar::Php)
+                        ->lightTheme(Theme::GithubLight)
+                        ->darkTheme(Theme::GithubDarkDefault)
+                        ->focusLine(intval($frame->line()))
+                        ->startLine(1),
+                ]))
             ->toArray();
     }
 }

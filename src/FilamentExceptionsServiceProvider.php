@@ -10,6 +10,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Throwable;
 
 class FilamentExceptionsServiceProvider extends PackageServiceProvider
 {
@@ -41,7 +42,7 @@ class FilamentExceptionsServiceProvider extends PackageServiceProvider
         });
 
         $this->callAfterResolving(ExceptionHandler::class, function (ExceptionHandler $handler): void {
-            $handler->reportable(function (\Throwable $e) use ($handler): void {
+            $handler->reportable(function (Throwable $e) use ($handler): void {
                 if ($handler->shouldReport($e)) {
                     FilamentExceptions::report($e);
                 }

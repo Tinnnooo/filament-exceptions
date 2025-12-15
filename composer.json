@@ -55,7 +55,7 @@
         }
     },
     "scripts": {
-        "analyse": "vendor/bin/phpstan analyse",
+        "analyse": "vendor/bin/phpstan analyse src",
         "test": "vendor/bin/pest --no-coverage",
         "type": "vendor/bin/pest --type-coverage",
         "lint": "vendor/bin/pint",

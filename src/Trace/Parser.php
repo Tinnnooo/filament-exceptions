@@ -19,7 +19,7 @@ class Parser
         }
 
         return collect($lines)
-            ->filter(fn ($line): bool => filled(trim((string) $line)))
+            ->filter(fn ($line): bool => filled(trim($line)))
             ->map(fn ($line): \BezhanSalleh\FilamentExceptions\Trace\Frame => new Frame($line))
             ->toArray();
     }

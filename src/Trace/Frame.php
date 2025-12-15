@@ -14,11 +14,21 @@ class Frame
 {
     protected ?array $attributes = [];
 
-    protected array|CodeBlock|null $code = [];
+    protected array | CodeBlock | null $code = [];
 
     public function __construct(protected ?string $frame = '')
     {
         $this->extract();
+    }
+
+    public function __call(string $method, array $arguments = [])
+    {
+        return Arr::get($this->attributes, $method, '');
+    }
+
+    public function __get(string $key): mixed
+    {
+        return Arr::get($this->attributes, $key, '');
     }
 
     public function extract(): ?array
@@ -46,14 +56,16 @@ class Frame
         if (empty($str)) {
             return;
         }
+
         if (preg_match('/^[^(]+(->|::)/', (string) $str, $m)) {
             preg_match('/([^:-]+)(?:->|::)([^(]+)\((.*)\)/', (string) $str, $matches);
             $this->attributes['class'] = $matches[1];
             $this->attributes['method'] = $matches[2];
             $this->attributes['args'] = $this->extractArgs($matches[3]);
             if (str()->contains($matches[2], ['{closure}']) && Arr::get($this->attributes, 'name') == '[internal function]') {
-                $this->attributes['name'] .= " $matches[1]->$matches[2]";
+                $this->attributes['name'] .= sprintf(' %s->%s', $matches[1], $matches[2]);
             }
+
             // class method call
         } else {
             preg_match('/([^(]+)\((.*)\)/', (string) $str, $matches);
@@ -72,15 +84,18 @@ class Frame
             if (! class_exists($class)) {
                 return;
             }
+
             $classReflection = new ReflectionClass($class);
             $filename = $classReflection->getFileName();
             if (! $classReflection->hasMethod($method)) {
                 return;
             }
+
             $methodReflection = $classReflection->getMethod($method);
 
             $lineNo = $methodReflection->getStartLine();
         }
+
         if (! $filename || ! $lineNo) {
             return;
         }
@@ -91,7 +106,9 @@ class Frame
             $file->seek($target);
 
             $curLineNo = $target + 1;
-            $line = $prefix = $suffix = '';
+            $line = '';
+            $prefix = '';
+            $suffix = '';
 
             while (! $file->eof()) {
                 if ($curLineNo == $lineNo) {
@@ -101,12 +118,15 @@ class Frame
                 } elseif ($curLineNo > $lineNo) {
                     $suffix .= $file->current();
                 }
+
                 $curLineNo++;
                 if ($curLineNo > $lineNo + 5) {
                     break;
                 }
+
                 $file->next();
             }
+
             $this->code = new CodeBlock($target + 1, $line, $prefix, $suffix);
             $this->attributes['file'] = $filename;
             $this->attributes['line'] = $lineNo;
@@ -115,7 +135,7 @@ class Frame
         }
     }
 
-    public function getCodeBlock(): array|CodeBlock
+    public function getCodeBlock(): array | CodeBlock
     {
         return empty($this->code) ? new CodeBlock : $this->code;
     }
@@ -133,10 +153,11 @@ class Frame
         if (empty($this->attributes['args'])) {
             return [];
         }
+
         $args = [];
         $names = $this->getParameterNames();
         foreach ($this->attributes['args'] as $key => $val) {
-            $args[Arr::get($names, $key, "param$key")] = $val;
+            $args[Arr::get($names, $key, 'param' . $key)] = $val;
         }
 
         return $args;
@@ -155,6 +176,7 @@ class Frame
             if (! $classReflection->hasMethod($method)) {
                 return $names;
             }
+
             foreach ($classReflection->getMethod($method)->getParameters() as $reflection) {
                 $names[] = $reflection->getName();
             }
@@ -163,28 +185,19 @@ class Frame
         return $names;
     }
 
-    protected function extractArgs($args): array
-    {
-        if (empty($args)) {
-            return [];
-        }
-        $args = explode(',', (string) $args);
-
-        return array_map('trim', $args);
-    }
-
     public function line()
     {
         return Arr::get($this->attributes, 'line', 0);
     }
 
-    public function __call($method, $arguments = [])
+    protected function extractArgs($args): array
     {
-        return Arr::get($this->attributes, $method, '');
-    }
+        if (empty($args)) {
+            return [];
+        }
 
-    public function __get($key)
-    {
-        return Arr::get($this->attributes, $key, '');
+        $args = explode(',', (string) $args);
+
+        return array_map(trim(...), $args);
     }
 }

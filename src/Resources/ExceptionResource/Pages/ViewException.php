@@ -24,20 +24,13 @@ class ViewException extends ViewRecord
     {
         if (blank($this->cachedFrames)) {
             $trace = "#0 {$this->record->file}({$this->record->line})\n";
-            $frames = (new Parser($trace.$this->record->trace))->parse();
+            $frames = (new Parser($trace . $this->record->trace))->parse();
             array_pop($frames);
 
             $this->cachedFrames = $frames;
         }
 
         return $this->cachedFrames;
-    }
-
-    protected function getActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
     }
 
     public function renderFrame(int $frameIndex, bool $isDark = false): string
@@ -61,13 +54,20 @@ class ViewException extends ViewRecord
     {
         return [
             'fi-resource-view-record-page',
-            'fi-resource-'.str_replace('/', '-', $this->getResource()::getSlug(Filament::getCurrentOrDefaultPanel())),
-            "fi-resource-record-{$this->getRecord()->getKey()}",
+            'fi-resource-' . str_replace('/', '-', $this->getResource()::getSlug(Filament::getCurrentOrDefaultPanel())),
+            'fi-resource-record-' . $this->getRecord()->getKey(),
         ];
     }
 
-    public function getMaxContentWidth(): Width|string|null
+    public function getMaxContentWidth(): Width | string | null
     {
         return Width::Full;
+    }
+
+    protected function getActions(): array
+    {
+        return [
+            DeleteAction::make(),
+        ];
     }
 }
