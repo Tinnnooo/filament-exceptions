@@ -8,7 +8,6 @@ use BezhanSalleh\FilamentExceptions\FilamentExceptions;
 use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
 use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages\ListExceptions;
 use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages\ViewException;
-<<<<<<< HEAD
 use BezhanSalleh\FilamentExceptions\Trace\Parser;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,19 +32,6 @@ class ExceptionResource extends Resource
 {
     public static ?array $cachedFrames = null;
 
-=======
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ViewAction;
-use Filament\Panel;
-use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Illuminate\Contracts\Database\Eloquent\Builder;
-
-class ExceptionResource extends Resource
-{
->>>>>>> v4
     public static function getCluster(): ?string
     {
         return FilamentExceptions::getCluster();
@@ -207,7 +193,6 @@ class ExceptionResource extends Resource
             'view' => ViewException::route('/{record}'),
         ];
     }
-<<<<<<< HEAD
 
     public static function infolist(Schema $schema): Schema
     {
@@ -309,6 +294,4 @@ class ExceptionResource extends Resource
             })
             ->toArray();
     }
-=======
->>>>>>> v4
 }

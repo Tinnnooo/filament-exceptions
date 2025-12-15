@@ -1,4 +1,3 @@
 {
-    "useLaravelPint": true,
-    "pintCacheEnabled": false
-}
+    "useLaravelPint": true
+  }

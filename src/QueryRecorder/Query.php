@@ -20,7 +20,6 @@ class Query
 {
     protected float $microtime;
 
-<<<<<<< HEAD
     public static function fromQueryExecutedEvent(QueryExecuted $queryExecuted, bool $reportBindings = false): self
     {
         return new self(
@@ -32,8 +31,6 @@ class Query
         );
     }
 
-=======
->>>>>>> v4
     /**
      * @param  array<string, string>|null  $bindings
      */
@@ -47,20 +44,6 @@ class Query
         $this->microtime = $microtime ?? microtime(true);
     }
 
-<<<<<<< HEAD
-=======
-    public static function fromQueryExecutedEvent(QueryExecuted $queryExecuted, bool $reportBindings = false): self
-    {
-        return new self(
-            $queryExecuted->sql,
-            $queryExecuted->time,
-            /** @phpstan-ignore-next-line  */
-            $queryExecuted->connectionName ?? '',
-            $reportBindings ? $queryExecuted->bindings : null
-        );
-    }
-
->>>>>>> v4
     /**
      * @return array<string, mixed>
      */

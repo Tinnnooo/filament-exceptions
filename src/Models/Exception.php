@@ -6,24 +6,16 @@ namespace BezhanSalleh\FilamentExceptions\Models;
 
 use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
 use Illuminate\Database\Eloquent\Builder;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\Model;
 
 class Exception extends model
-=======
-use Illuminate\Database\Eloquent\MassPrunable;
-use Illuminate\Database\Eloquent\Model;
-
-class Exception extends Model
->>>>>>> v4
 {
     use MassPrunable;
 
     protected $table = 'filament_exceptions_table';
 
-<<<<<<< HEAD
     /**
      * @var array
      */
@@ -38,16 +30,11 @@ class Exception extends Model
     //     ];
     // }
 
-=======
-    protected $guarded = [];
-
->>>>>>> v4
     public function prunable(): Builder
     {
         return static::whereDate('created_at', '<=', FilamentExceptionsPlugin::get()->getModelPruneInterval());
     }
 
-<<<<<<< HEAD
     protected function body(): Attribute
     {
         return Attribute::make(
@@ -97,19 +84,5 @@ class Exception extends Model
         //     return $val; // keep strings/numbers as is
         // })
         // ->all();
-=======
-    protected function casts(): array
-    {
-        return [
-            'line' => 'integer',
-            'trace' => 'array',
-            'headers' => 'array',
-            'cookies' => 'array',
-            'body' => 'array',
-            'query' => 'array',
-            'route_context' => 'array',
-            'route_parameters' => 'array',
-        ];
->>>>>>> v4
     }
 }

@@ -1,20 +1,11 @@
 <?php
 
-<<<<<<< HEAD
-=======
-declare(strict_types=1);
-
->>>>>>> v4
 namespace BezhanSalleh\FilamentExceptions\Tests;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-<<<<<<< HEAD
 use Filament\Pages\Dashboard;
-=======
-use Filament\Pages;
->>>>>>> v4
 use Filament\Panel;
 use Filament\PanelProvider;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -37,11 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->emailVerification()
             ->pages([
-<<<<<<< HEAD
                 Dashboard::class,
-=======
-                Pages\Dashboard::class,
->>>>>>> v4
             ])
             ->resources([
 

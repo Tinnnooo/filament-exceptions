@@ -28,17 +28,6 @@ class FilamentExceptionsPlugin implements Plugin
         return app(static::class);
     }
 
-<<<<<<< HEAD
-=======
-    public static function get(): static
-    {
-        /** @var static $plugin */
-        $plugin = filament(app(static::class)->getId());
-
-        return $plugin;
-    }
-
->>>>>>> v4
     public function getId(): string
     {
         return 'filament-exceptions';
@@ -54,7 +43,6 @@ class FilamentExceptionsPlugin implements Plugin
             ->resources([
                 ExceptionResource::class,
             ]);
-<<<<<<< HEAD
     }
 
     public function boot(Panel $panel): void {}
@@ -66,10 +54,4 @@ class FilamentExceptionsPlugin implements Plugin
 
         return $plugin;
     }
-=======
-
-    }
-
-    public function boot(Panel $panel): void {}
->>>>>>> v4
 }
