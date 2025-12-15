@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BezhanSalleh\FilamentExceptions\Resources\ExceptionResource\Pages;
+namespace BezhanSalleh\FilamentExceptions\Resources\Exceptions\Pages;
 
-use BezhanSalleh\FilamentExceptions\Resources\ExceptionResource;
+use BezhanSalleh\FilamentExceptions\Resources\Exceptions\ExceptionResource;
 use Filament\Resources\Pages\ListRecords;
 
 class ListExceptions extends ListRecords

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BezhanSalleh\FilamentExceptions;
 
 use BezhanSalleh\FilamentExceptions\Commands\InstallCommand;
+use BezhanSalleh\FilamentExceptions\QueryRecorder\QueryRecorder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
@@ -29,11 +30,18 @@ class FilamentExceptionsServiceProvider extends PackageServiceProvider
         parent::packageRegistered();
 
         $this->app->scoped('filament-exceptions', fn ($app): FilamentExceptions => new FilamentExceptions($app->make(Request::class)));
+
+        $this->app->singleton(QueryRecorder::class, fn ($app) => (new QueryRecorder($app))->start());
     }
 
     public function packageBooted(): void
     {
         parent::packageBooted();
+
+        $this->loadViewsFrom(
+            base_path('vendor/laravel/framework/src/Illuminate/Foundation/resources/exceptions/renderer'),
+            'laravel-exceptions-renderer'
+        );
 
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
             $schedule->command('model:prune', [

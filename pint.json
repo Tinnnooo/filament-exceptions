@@ -1,9 +1,6 @@
 {
     "preset": "laravel",
-    "notPath": [
-        "tests/TestCase.php",
-        "tmp"
-    ],
+    "notPath": ["tests/TestCase.php", "tmp"],
     "rules": {
         "blank_line_before_statement": true,
         "concat_space": {

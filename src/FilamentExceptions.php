@@ -27,13 +27,52 @@ class FilamentExceptions
      */
     public static function report(Throwable $exception): void
     {
-        $reporter = new self(request());
+        try {
+            if (! static::shouldCapture($exception)) {
+                return;
+            }
 
-        if (! str($exception?->getFile())->endsWith('.php')) {
-            return;
+            $reporter = new self(request());
+            $reporter->reportException($exception);
+        } catch (Throwable) {
+            //
+        }
+    }
+
+    /**
+     * Determine if the exception should be captured.
+     */
+    public static function shouldCapture(Throwable $exception): bool
+    {
+        $file = $exception->getFile();
+        $message = $exception->getMessage();
+
+        // Skip empty/invalid file paths
+        if (blank($file) || ! str($file)->endsWith('.php')) {
+            return false;
         }
 
-        $reporter->reportException($exception);
+        // Skip eval'd code
+        if (str_contains($file, "eval()'d code")) {
+            return false;
+        }
+
+        // Skip empty messages
+        if (blank($message)) {
+            return false;
+        }
+
+        // Skip VSCode Laravel extension noise
+        if (str_contains($message, '__VSCODE_LARAVEL_')) {
+            return false;
+        }
+
+        // Skip invalid line numbers
+        if ($exception->getLine() <= 0) {
+            return false;
+        }
+
+        return true;
     }
 
     public static function cluster(string $cluster): void
